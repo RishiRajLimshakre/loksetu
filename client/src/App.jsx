@@ -7,10 +7,12 @@ import RegisterPage from "./pages/RegisterPage";
 import CreateIssuePage from "./pages/CreateIssuePage";
 import MyReportsPage from "./pages/MyReportsPage";
 import IssueDetailsPage from "./pages/IssueDetailsPage";
+import ProfilePage from "./pages/ProfilePage";
+import MapPage from "./pages/MapPage";
 
 const App = () => {
   return (
-    <>
+    <div className="app-shell">
       <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -33,8 +35,22 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/map"
+          element={
+            <ProtectedRoute>
+              <MapPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/profile"
+        element={
+          <ProtectedRoute>
+            <ProfilePage/>
+          </ProtectedRoute>
+        }/>
       </Routes>
-    </>
+    </div>
   );
 };
 

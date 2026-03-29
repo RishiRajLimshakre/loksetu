@@ -1,24 +1,45 @@
 import { Link } from "react-router-dom";
+import "./IssueCard.css";
 
-const IssueCard = ({ issue , onUpvote}) => {
+const IssueCard = ({ issue, onUpvote }) => {
+  //here article , is a semantic html for content card/post.
   return (
-    <div>
+    <article className="issue-card">  
+      <div className="issue-card__header">
+        <p className="issue-card__reporter">
+          Reported by {issue.reportedBy?.name || "Anonymous"}
+        </p>
+      </div>
+
+      <h3 className="issue-card__title">
+        <Link to={`/issues/${issue._id}`}>{issue.title}</Link>
+      </h3>
+
       {issue.imageUrl && (
-        <img
-          src={issue.imageUrl}
-          alt={issue.title}
-          style={{ width: "200px", height: "auto" }}
-        />
+        <Link to={`/issues/${issue._id}`} className="issue-card__image-link">
+          <img
+            src={issue.imageUrl}
+            alt={issue.title}
+            className="issue-card__image"
+          />
+        </Link>
       )}
 
-      <h3><Link to={`/issues/${issue._id}`}>{issue.title}</Link></h3>
-      <p>{issue.description}</p>
-      <p>Category: {issue.category}</p>
-      <p>Status: {issue.status}</p>
-      <p>Upvotes: {issue.upvotesCount}</p>
+      <div className="issue-card__footer">
+        <div className="issue-card__meta">
+          <span className="issue-card__badge">{issue.category}</span>
+          <span className="issue-card__status">{issue.status}</span>
+        </div>
 
-      <button onClick={() => onUpvote(issue._id)}>↑ Upvote</button>
-    </div>
+        <button
+          type="button"
+          className="issue-card__upvote"
+          onClick={() => onUpvote(issue._id)}
+        >
+           ⬆️ Upvote ({issue.upvotesCount})
+        </button>
+      </div>
+    </article>
   );
 };
 

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../api/axios";
+import "./HomePage.css";
 import IssueCard from "../components/IssueCard";
 import { useAuth } from "../context/AuthContext";
 
@@ -56,10 +57,10 @@ const HomePage = () => {
   if (error) {
     return <p>{error}</p>;
   }
-
-  return (
-    <div>
-      <h1>All Issues</h1>
+return (
+  <section className="feed-page">
+    <div className="feed-page__inner">
+      <h1 className="feed-page__title">All Issues</h1>
 
       {issues.length === 0 ? (
         <p>No issues found.</p>
@@ -69,7 +70,8 @@ const HomePage = () => {
         ))
       )}
     </div>
-  );
+  </section>
+);
 };
 
 export default HomePage;
