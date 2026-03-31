@@ -81,3 +81,63 @@ img {
 .app-shell {
   min-height: 100vh;
 }
+
+.page-shell {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 24px 16px 160px;
+}
+
+.page-card {
+  width: 100%;
+  max-width: 640px;
+  background: #15202b;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+}
+
+.page-title {
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin-bottom: 18px;
+  color: #f8fafc;
+}
+
+.page-subtext {
+  color: #9fb0c0;
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.95rem;
+  color: #c8d5e1;
+  margin-bottom: 6px;
+}
+
+.message-error {
+  color: #fca5a5;
+  margin-bottom: 12px;
+}
+
+.message-success {
+  color: #86efac;
+  margin-bottom: 12px;
+}
+
+.button-secondary {
+  background: #1d2d3d;
+  color: #dbe7f3;
+}
+
+.button-secondary:hover {
+  background: #26384a;
+}

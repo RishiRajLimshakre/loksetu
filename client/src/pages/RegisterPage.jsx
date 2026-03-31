@@ -1,9 +1,11 @@
 import { useState } from "react";
 import api from "../api/axios";
 import { useAuth } from "../context/AuthContext";
+import { Link, useNavigate } from "react-router-dom";
 
 const RegisterPage = () => {
   const { login } = useAuth();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -31,12 +33,7 @@ const RegisterPage = () => {
       const response = await api.post("/auth/register", formData);
 
       login(response.data.token, response.data.user);
-
-      localStorage.setItem("token", response.data.token);
-      localStorage.setItem("user", JSON.stringify(response.data.token));
-      console.log("Saved token and user to localStorage");
-
-      console.log(response.data);
+      navigate("/login");
     } catch (err) {
       setError(err.response?.data?.message || "Something went wrong");
     } finally {
@@ -45,50 +42,58 @@ const RegisterPage = () => {
   };
 
   return (
-    <div>
-      <h1>Register</h1>
+    <section className="page-shell">
+      <div className="page-card">
+        <h1 className="page-title">Create Your Account</h1>
+        <p className="page-subtext">
+          Join LokSetu to report civic issues and help drive community action.
+        </p>
 
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Name</label>
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            placeholder="Enter your name"
-          />
-        </div>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label className="form-label">Name</label>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="Enter your name"
+            />
+          </div>
 
-        <div>
-          <label>Email</label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="Enter your email"
-          />
-        </div>
+          <div className="form-group">
+            <label className="form-label">Email</label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="Enter your email"
+            />
+          </div>
 
-        <div>
-          <label>Password</label>
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            placeholder="Enter your password"
-          />
-        </div>
+          <div className="form-group">
+            <label className="form-label">Password</label>
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Create a password"
+            />
+          </div>
 
-        {error && <p>{error}</p>}
+          {error && <p className="message-error">{error}</p>}
 
-        <button type="submit" disabled={loading}>
-          {loading ? "Registering..." : "Register"}
-        </button>
-      </form>
-    </div>
+          <button type="submit" disabled={loading}>
+            {loading ? "Creating account..." : "Register"}
+          </button>
+          <p className="page-subtext" style={{ marginTop: "16px" }}>
+            Already have an account? <Link to="/login" style={{color:"lightgreen"}}>Login</Link>
+          </p>
+        </form>
+      </div>
+    </section>
   );
 };
 

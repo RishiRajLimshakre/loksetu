@@ -1,9 +1,11 @@
 import { useState } from "react";
 import api from "../api/axios";
 import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const CreateIssuePage = () => {
   const { token } = useAuth();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     title: "",
@@ -60,7 +62,7 @@ const CreateIssuePage = () => {
       setError("");
       setSuccess("");
 
-      const issueFormData = new FormData(); // this create multipart form data object
+      const issueFormData = new FormData();
 
       issueFormData.append("title", formData.title);
       issueFormData.append("description", formData.description);
@@ -80,7 +82,7 @@ const CreateIssuePage = () => {
       });
 
       setSuccess(response.data.message);
-
+     
       setFormData({
         title: "",
         description: "",
@@ -90,6 +92,8 @@ const CreateIssuePage = () => {
         latitude: "",
       });
       setImage(null);
+       navigate("/");
+
     } catch (err) {
       setError(err.response?.data?.message || "Failed to create issue");
     } finally {
@@ -98,96 +102,109 @@ const CreateIssuePage = () => {
   };
 
   return (
-    <div>
-      <h1>Create Issue</h1>
+    <section className="page-shell">
+      <div className="page-card">
+        <h1 className="page-title">Report an Issue</h1>
+        <p className="page-subtext">
+          Submit a civic issue with proof and location so your community can
+          support it.
+        </p>
 
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Title</label>
-          <input
-            type="text"
-            name="title"
-            value={formData.title}
-            onChange={handleChange}
-            placeholder="Enter issue title"
-          />
-        </div>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label className="form-label">Title</label>
+            <input
+              type="text"
+              name="title"
+              value={formData.title}
+              onChange={handleChange}
+              placeholder="Enter issue title"
+            />
+          </div>
 
-        <div>
-          <label>Description</label>
-          <textarea
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            placeholder="Describe the issue"
-          />
-        </div>
+          <div className="form-group">
+            <label className="form-label">Description</label>
+            <textarea
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              placeholder="Describe the issue"
+            />
+          </div>
 
-        <div>
-          <label>Category</label>
-          <select
-            name="category"
-            value={formData.category}
-            onChange={handleChange}
-          >
-            <option value="">Select category</option>
-            <option value="pothole">Pothole</option>
-            <option value="garbage">Garbage</option>
-            <option value="streetlight">Streetlight</option>
-            <option value="drainage">Drainage</option>
-            <option value="water_leakage">Water Leakage</option>
-          </select>
-        </div>
+          <div className="form-group">
+            <label className="form-label">Category</label>
+            <select
+              name="category"
+              value={formData.category}
+              onChange={handleChange}
+            >
+              <option value="">Select category</option>
+              <option value="pothole">Pothole</option>
+              <option value="garbage">Garbage</option>
+              <option value="streetlight">Streetlight</option>
+              <option value="drainage">Drainage</option>
+              <option value="water_leakage">Water Leakage</option>
+            </select>
+          </div>
 
-        <div>
-          <label>Address</label>
-          <input
-            type="text"
-            name="addressText"
-            value={formData.addressText}
-            onChange={handleChange}
-            placeholder="Enter address"
-          />
-        </div>
+          <div className="form-group">
+            <label className="form-label">Address</label>
+            <input
+              type="text"
+              name="addressText"
+              value={formData.addressText}
+              onChange={handleChange}
+              placeholder="Enter address"
+            />
+          </div>
 
-        <div>
-          <label>Longitude</label>
-          <input
-            type="text"
-            name="longitude"
-            value={formData.longitude}
-            onChange={handleChange}
-            placeholder="Enter longitude"
-          />
-        </div>
+          <div className="form-group">
+            <label className="form-label">Longitude</label>
+            <input
+              type="text"
+              name="longitude"
+              value={formData.longitude}
+              onChange={handleChange}
+              placeholder="Enter longitude"
+            />
+          </div>
 
-        <div>
-          <label>Latitude</label>
-          <input
-            type="text"
-            name="latitude"
-            value={formData.latitude}
-            onChange={handleChange}
-            placeholder="Enter latitude"
-          />
-        </div>
-        <button type="button" onClick={handleUseCurrentLocation}>
-          Use Current Location
-        </button>
+          <div className="form-group">
+            <label className="form-label">Latitude</label>
+            <input
+              type="text"
+              name="latitude"
+              value={formData.latitude}
+              onChange={handleChange}
+              placeholder="Enter latitude"
+            />
+          </div>
 
-        <div>
-          <label>Image</label>
-          <input type="file" accept="image/*" onChange={handleFileChange} />
-        </div>
+          <div className="form-group">
+            <button
+              type="button"
+              className="button-secondary"
+              onClick={handleUseCurrentLocation}
+            >
+              Use Current Location
+            </button>
+          </div>
 
-        {error && <p>{error}</p>}
-        {success && <p>{success}</p>}
+          <div className="form-group">
+            <label className="form-label">Image Proof</label>
+            <input type="file" accept="image/*" onChange={handleFileChange} />
+          </div>
 
-        <button type="submit" disabled={loading}>
-          {loading ? "Submitting..." : "Submit Issue"}
-        </button>
-      </form>
-    </div>
+          {error && <p className="message-error">{error}</p>}
+          {success && <p className="message-success">{success}</p>}
+
+          <button type="submit" disabled={loading}>
+            {loading ? "Submitting..." : "Submit Issue"}
+          </button>
+        </form>
+      </div>
+    </section>
   );
 };
 
