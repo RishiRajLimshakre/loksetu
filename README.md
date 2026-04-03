@@ -2,51 +2,86 @@
 
 **From Complaint to Community Action**
 
-LokSetu is a civic-tech platform where citizens can report local civic issues like potholes, garbage, broken streetlights, and water leakage using image proof and live location.
+LokSetu is a mobile-first civic-tech platform that enables citizens to report local civic issues such as potholes, broken streetlights, garbage dumps, and water leakage using image proof and geolocation.
 
-It is designed to make civic complaints more organized, transparent, and community-driven by allowing users to support issues through upvotes and helping serious reports gain public visibility.
+It improves transparency and community participation in civic issue reporting by allowing users to support issues through upvotes. Once an issue reaches a vote threshold, the platform automatically marks it for escalation, simulating a real-world authority escalation workflow.
+
+---
+
+## Live Demo
+
+- **Frontend:** [[Click Here!](https://loksetu-six.vercel.app/)]
+- **Backend:** [[Click Here!](https://loksetu-9m2u.onrender.com)]
 
 ---
 
 ## Features
 
-- User authentication
-- Report issues with image and location
-- Public issue feed
-- Interactive map view
-- Upvote system
-- Issue status tracking
-- Admin moderation dashboard
-- Escalation logic for highly supported issues
+### User Features
+- User registration and login
+- JWT-based authentication
+- Report civic issues with title, description, category, image proof, address, and geolocation
+- Auto-fill current location using browser geolocation
+- View all issues in a public feed
+- View detailed issue pages
+- Upvote issues
+- View, edit, and delete own reports
+- Profile page
+
+### Admin Features
+- Admin-only protected route
+- View all reported issues
+- Update issue status:
+  - open
+  - in_progress
+  - resolved
+  - escalated
+
+### Escalation Workflow
+- Automatic escalation when an issue reaches the upvote threshold
+- Escalation message generation stored with issue data
+- Visual escalation status on frontend
 
 ---
 
 ## Tech Stack
 
 ### Frontend
-- React
-- React Router
+- React (Vite)
+- React Router DOM
 - Axios
-- Tailwind CSS
-- Leaflet / React Leaflet
+- Context API
+- Plain CSS
+- React Icons
 
 ### Backend
 - Node.js
 - Express.js
-- MongoDB
+- MongoDB Atlas
 - Mongoose
 - JWT Authentication
-
-### Integrations
 - Multer
 - Cloudinary
-- Geolocation API
-- Twitter/X API or mock escalation service
+
+### Deployment
+- Frontend: Vercel
+- Backend: Render
+- Database: MongoDB Atlas
+- Image Hosting: Cloudinary
 
 ---
+## Future Improvements
+- Real Twitter/X API integration for escalation posting
+- Interactive map view with issue markers
+- Comments on issues
+- Notifications
+- Better admin analytics dashboard
+- Public transparency dashboard
+- Advanced filtering and search
 
-## Goal
+## Local Setup
 
-The goal of LokSetu is to bridge the gap between citizens and local authorities by turning scattered complaints into structured, location-based, community-supported reports.
-
-
+### 1. Clone the repository
+```bash
+git clone https://github.com/your-username/loksetu.git
+cd loksetu
