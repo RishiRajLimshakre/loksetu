@@ -1,4 +1,5 @@
 import { useAuth } from "../context/AuthContext";
+import { Link } from "react-router-dom";
 
 const ProfilePage = () => {
   const { user, logout } = useAuth();
@@ -27,6 +28,14 @@ const ProfilePage = () => {
               <p className="form-label">Role</p>
               <p>{user.role}</p>
             </div>
+            
+            {user.role === "admin" && (
+              <div className="form-group">
+                <Link to="/admin">
+                  <button type="button">Go to Admin Panel</button>
+                </Link>
+              </div>
+            )}
 
             <button type="button" onClick={logout}>
               Logout

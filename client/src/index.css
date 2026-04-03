@@ -141,3 +141,70 @@ img {
 .button-secondary:hover {
   background: #26384a;
 }
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Inter, Arial, sans-serif;
+  background: #070b14;
+  color: var(--text);
+  min-height: 100vh;
+  padding-bottom: 110px;
+  overflow-x: hidden;
+}
+
+.app-shell {
+  position: relative;
+  min-height: 100vh;
+}
+
+.app-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 18% 18%, rgba(123, 92, 255, 0.08), transparent 26%),
+    radial-gradient(circle at 82% 28%, rgba(79, 70, 229, 0.06), transparent 24%),
+    radial-gradient(circle at 50% 78%, rgba(168, 85, 247, 0.05), transparent 28%),
+    #060912;
+}
+
+.app-bg__blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.12;
+}
+
+.app-bg__blob--one {
+  width: 280px;
+  height: 280px;
+  background: #7c3aed;
+  top: 8%;
+  left: 8%;
+}
+
+.app-bg__blob--two {
+  width: 320px;
+  height: 320px;
+  background: #4f46e5;
+  top: 40%;
+  right: 8%;
+}
+
+.app-bg__blob--three {
+  width: 260px;
+  height: 260px;
+  background: #9333ea;
+  bottom: 10%;
+  left: 35%;
+}
+
+.app-content {
+  position: relative;
+  z-index: 1;
+}

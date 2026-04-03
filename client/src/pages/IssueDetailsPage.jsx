@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import api from "../api/axios";
 
 const IssueDetailsPage = () => {
-  const { id } = useParams();  // this the route url will look like /issue/id(whatever it is)
+  const { id } = useParams();
 
   const [issue, setIssue] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -23,7 +23,7 @@ const IssueDetailsPage = () => {
     };
 
     fetchIssue();
-  }, [id]);  // effect should re-run if route id changes.
+  }, [id]);
 
   if (loading) {
     return <p>Loading issue details...</p>;
@@ -38,24 +38,79 @@ const IssueDetailsPage = () => {
   }
 
   return (
-    <div>
-      {issue.imageUrl && (
-        <img
-          src={issue.imageUrl}
-          alt={issue.title}
-          style={{ width: "250px", height: "auto" }}
-        />
-      )}
+    <section className="page-shell">
+      <div className="page-card">
+        <p className="page-subtext">
+          Reported by {issue.reportedBy?.name || "Anonymous"}
+        </p>
 
-      <h1>{issue.title}</h1>
-      <p>{issue.description}</p>
-      <p>Category: {issue.category}</p>
-      <p>Status: {issue.status}</p>
-      <p>Upvotes: {issue.upvotesCount}</p>
-      <p>Address: {issue.addressText}</p>
+        <h1 className="page-title">{issue.title}</h1>
 
-      {issue.reportedBy && <p>Reported by: {issue.reportedBy.name}</p>}
-    </div>
+        {issue.imageUrl && (
+          <img
+            src={issue.imageUrl}
+            alt={issue.title}
+            style={{
+              marginBottom: "18px",
+              borderRadius: "18px",
+              width: "100%",
+              maxHeight: "380px",
+              objectFit: "cover",
+            }}
+          />
+        )}
+
+        <div
+          style={{
+            display: "flex",
+            gap: "10px",
+            flexWrap: "wrap",
+            marginBottom: "18px",
+          }}
+        >
+          <span className="issue-card__badge">{issue.category}</span>
+          <span className="issue-card__status">{issue.status}</span>
+          <span className="issue-card__badge">
+            Upvotes: {issue.upvotesCount}
+          </span>
+        </div>
+
+        {issue.escalationMessage && (
+          <div
+            style={{
+              marginBottom: "18px",
+              padding: "14px",
+              borderRadius: "16px",
+              background: "rgba(249, 115, 22, 0.10)",
+              border: "1px solid rgba(249, 115, 22, 0.22)",
+              color: "#fdba74",
+            }}
+          >
+            <p
+              className="form-label"
+              style={{ marginBottom: "6px", color: "#fdba74" }}
+            >
+              Escalation Notice
+            </p>
+            <p>{issue.escalationMessage}</p>
+          </div>
+        )}
+
+        <div className="form-group">
+          <p className="form-label">Description</p>
+          <p className="page-subtext" style={{ color: "#e2e8f0" }}>
+            {issue.description}
+          </p>
+        </div>
+
+        <div className="form-group">
+          <p className="form-label">Address</p>
+          <p className="page-subtext" style={{ color: "#e2e8f0" }}>
+            {issue.addressText || "No address provided"}
+          </p>
+        </div>
+      </div>
+    </section>
   );
 };
 
