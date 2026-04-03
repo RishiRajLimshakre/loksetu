@@ -51,6 +51,14 @@ const issueSchema = new mongoose.Schema(
             type: Number,
             default: 0,
         },
+        escalatedAt: {
+            type: Date,
+            default: null,
+        },
+        escalationMessage: {
+            type: String,
+            default: "",
+        },
     },
     { timestamps: true }
 );

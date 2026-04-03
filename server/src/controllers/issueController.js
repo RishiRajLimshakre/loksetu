@@ -152,6 +152,11 @@ const upvoteIssue = async (req, res) => {
     });
 
     issue.upvotesCount += 1;
+    if (issue.upvotesCount >= 3 && issue.status !== "escalated") {
+      issue.status = "escalated";
+      issue.escalatedAt = new Date();
+      issue.escalationMessage = `Civic Alert: "${issue.title}" at ${issue.addressText || "the reported location"} has crossed ${issue.upvotesCount} community upvotes. Local authorities are requested to take action. #LokSetu`;
+    }
     await issue.save();
 
     res.status(200).json({
@@ -224,4 +229,4 @@ const updateIssueStatus = async (req, res) => {
   }
 };
 
-module.exports = { createIssue, getAllIssues, getIssueById, getMyIssues, deleteIssue, updateIssue, upvoteIssue, removeUpvote,updateIssueStatus };
+module.exports = { createIssue, getAllIssues, getIssueById, getMyIssues, deleteIssue, updateIssue, upvoteIssue, removeUpvote, updateIssueStatus };
