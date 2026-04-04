@@ -1,5 +1,6 @@
 const Issue = require("../models/Issue");
 const Vote = require("../models/Vote");
+const jwt = require = ("jsonwebtoken");
 
 //this is how an issue is created logic
 const createIssue = async (req, res) => {
@@ -32,14 +33,38 @@ const createIssue = async (req, res) => {
   }
 };
 
-
+//this is to get users
 const getAllIssues = async (req, res) => {
   try {
     const issues = await Issue.find()
       .populate("reportedBy", "name email")
       .sort({ createdAt: -1 });
 
-    res.status(200).json({ issues });
+    let votedIssueIds = [];
+
+    if (
+      req.headers.authorization &&
+      req.headers.authorization.startsWith("Bearer")
+    ) {
+      const token = req.headers.authorization.split(" ")[1];
+
+      try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        const votes = await Vote.find({ user: decoded.id }).select("issue");
+        votedIssueIds = votes.map((vote) => vote.issue.toString());
+      } catch (error) {
+        votedIssueIds = [];
+      }
+    }
+
+    const issuesWithVoteStatus = issues.map((issue) => {
+      const issueObj = issue.toObject();
+      issueObj.hasUpvoted = votedIssueIds.includes(issue._id.toString());
+      return issueObj;
+    });
+
+    res.status(200).json({ issues: issuesWithVoteStatus });
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
   }
