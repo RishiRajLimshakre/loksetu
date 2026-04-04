@@ -11,29 +11,45 @@ const HomePage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const fetchIssues = async () => {
-    try {
-      setError("");
-      const response = await api.get("/issues");
-      setIssues(response.data.issues);
-    } catch (err) {
-      setError("Failed to fetch issues");
-    } finally {
-      setLoading(false);
-    }
-  };
+ const fetchIssues = async () => {
+  try {
+    setError("");
+
+    const config = token
+      ? {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      : {};
+
+    const response = await api.get("/issues", config);
+    setIssues(response.data.issues);
+  } catch (err) {
+    setError("Failed to fetch issues");
+  } finally {
+    setLoading(false);
+  }
+};
 
   useEffect(() => {
     fetchIssues();
   }, []);
 
-  const handleUpvote = async (issueId) => {
-    if (!user) {
-      alert("Please login to upvote issues");
-      return;
-    }
+ const handleUpvote = async (issueId, hasUpvoted) => {
+  if (!user) {
+    alert("Please login to vote on issues");
+    return;
+  }
 
-    try {
+  try {
+    if (hasUpvoted) {
+      await api.delete(`/issues/${issueId}/upvote`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    } else {
       await api.post(
         `/issues/${issueId}/upvote`,
         {},
@@ -43,12 +59,13 @@ const HomePage = () => {
           },
         }
       );
-
-      fetchIssues();
-    } catch (err) {
-      alert(err.response?.data?.message || "Failed to upvote");
     }
-  };
+
+    fetchIssues();
+  } catch (err) {
+    alert(err.response?.data?.message || "Failed to update vote");
+  }
+};
 
   if (loading) {
     return <p>Loading issues...</p>;

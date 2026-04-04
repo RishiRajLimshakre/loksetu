@@ -49,16 +49,21 @@ const IssueCard = ({ issue, onUpvote, onDelete, editLink }) => {
       <div className="issue-card__footer">
         <div className="issue-card__meta">
           <span className="issue-card__badge">{issue.category}</span>
-          <span className={`issue-card__status issue-card__status--${issue.status}`}> {issue.status} </span>
+          <span
+            className={`issue-card__status issue-card__status--${issue.status}`}
+          >
+            {" "}
+            {issue.status}{" "}
+          </span>
         </div>
 
         {onUpvote && (
           <button
             type="button"
             className="issue-card__upvote"
-            onClick={() => onUpvote(issue._id)}
+            onClick={() => onUpvote(issue._id, issue.hasUpvoted)}
           >
-            ⬆️ Upvote ({issue.upvotesCount})
+             {issue.hasUpvoted ? "⬆️ Upvoted" : "⬆️ Upvote"} ({issue.upvotesCount})
           </button>
         )}
       </div>
