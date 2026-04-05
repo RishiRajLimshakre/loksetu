@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../api/axios";
 import { useAuth } from "../context/AuthContext";
+import IssueCardSkeleton from "../components/IssueCardSkeleton";
 
 const AdminPage = () => {
   const { token } = useAuth();
@@ -48,8 +49,15 @@ const AdminPage = () => {
     }
   };
 
-  if (loading) {
-    return <p>Loading admin panel...</p>;
+   if (loading) {
+    return (
+      <section className="feed-page">
+        <div className="feed-page__inner">
+          <h1 className="feed-page__title">Admin Panel</h1>
+          <IssueCardSkeleton />
+        </div>
+      </section>
+    );
   }
 
   if (error) {

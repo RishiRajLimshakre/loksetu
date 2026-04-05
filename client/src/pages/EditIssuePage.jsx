@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../api/axios";
 import { useAuth } from "../context/AuthContext";
+import IssueCardSkeleton from "../components/IssueCardSkeleton";
 
 const EditIssuePage = () => {
   const { id } = useParams();
@@ -72,7 +73,14 @@ const EditIssuePage = () => {
   };
 
   if (loading) {
-    return <p>Loading issue details...</p>;
+    return (
+      <section className="feed-page">
+        <div className="feed-page__inner">
+          <h1 className="feed-page__title">Edit Report</h1>
+          <IssueCardSkeleton />
+        </div>
+      </section>
+    );
   }
 
   return (
