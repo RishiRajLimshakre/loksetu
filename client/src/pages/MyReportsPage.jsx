@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import api from "../api/axios";
 import IssueCard from "../components/IssueCard";
 import { useAuth } from "../context/AuthContext";
+import IssueCardSkeleton from "../components/IssueCardSkeleton";
 
 const MyReportsPage = () => {
   const { token } = useAuth();
@@ -53,8 +54,19 @@ const MyReportsPage = () => {
   };
 
   if (loading) {
-    return <p>Loading your reports...</p>;
-  }
+  return (
+    <section className="feed-page">
+      <div className="feed-page__inner">
+        <h1 className="page-title">My Reports</h1>
+        <p className="page-subtext">
+          Track the civic issues you have reported and follow their progress.
+        </p>
+        <IssueCardSkeleton />
+        <IssueCardSkeleton />
+      </div>
+    </section>
+  );
+}
 
   if (error) {
     return <p>{error}</p>;
