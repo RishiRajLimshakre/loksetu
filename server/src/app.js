@@ -10,7 +10,11 @@ app.use(express.json());
 
 app.get("/", (req, res)=> {
  res.json({message: "LokSetu API is running"});
-})
+});
+
+app.get("/health", (req, res) => {
+  res.status(200).send("OK");
+});
 
 app.use("/api/auth", authRoutes);
 app.use("/api/issues", issueRoutes);
